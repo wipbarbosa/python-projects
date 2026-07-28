@@ -1,102 +1,127 @@
-products = []
+inventario = []
 
 while True:
-
-    print(  
-        f"===== INVENTORY MANAGER =====\n"
-        "1 - Add product\n"
-        "2 - Show products\n"
-        "3 - Search product\n"
-        "4 - Update stock\n"
-        "5 - Remove product\n"
-        "6 - Exit"
+    print(
+        f"Menu de configuração do inventario\n"
+        f"1 - Adicinar Produto\n"
+        f"2 - Exibir Produtos\n"
+        f"3 - Procurar produtos\n"
+        f"4 - Atualizar Produtos\n"
+        f"5 - Remover Produtos\n"
+        f"6 - Sair\n"
         )
-    
-    option = int(input("choose an option: "))
+    entrada = int(input("Digite a opção escolhida:"))
 
-    if option == 1:
-        print("Add Product")
-        product = {
+    if entrada == 1:
+        print ("Adicionar Produto")
+        produto = {
 
-        "name": input(f"name: ").lower(),
-        "price": float(input(f"price: ")),
-        "stock": int(input(f"stock: "))
+        "nome": input(f"nome: ").lower(),
+        "preço": float(input("preço: ")),
+        "estoque": int(input(f"estoque: "))
         }
 
-        products.append(product)
-        print("Product added successfully!")
+        inventario.append(produto)
+        print("Produto adicionado com sucesso!")
+    
+    elif entrada == 2:
+        if len(inventario) == 0:
+            print("Inventario vazio")
 
-    elif option == 2:
-        if len(products) == 0:
-            print("No products Registered.")
-        
         else:
-            print (f"Products:")
-           
-            for product in products:
-                print("=" * 25)
-
-                for key, value in product.items():
-                    print (f"{key.capitalize():<8}: {value}")
-
-                print("=" * 25)
-
-    elif option == 3:
-        if len(products) == 0:
-            print("No products Registered.")
-        
-        else:
-            print("Search Products")
-            search_product = input("which product do you want to look for? ").lower()
-            found = False
-            for product in products:
-                
-                if search_product == product["name"]:
-                    print("\nProduct Found!")
-                    print("=" * 25)
-                    
-
-                    for key,value in product.items():
-                        print(f"{key}: {value}")
-                    print("=" * 25)
-                
-                found = True
-                break
-
-    elif option == 4:
-        if len(products) == 0:
-            print("No products Registered.")
-        
-        else:
-            print("Updade products")
-            product_update = input("Product name")
-            product_found = False
-
-
-            for product in products:
-                
-                if (product_update == str(product.get("name", "")).lower() or
-                    product_update == str(product.get("price", "")) or
-                    product_update == str(product.get("stock", ""))):
-                    print("\nProduct Found!")
-                    
-                    product_found = True
-                    
-                update_line = input("What field do you want to update? ")
-                field_found = False
+            print("=" * 25)
+            print("Lista de Produtos: ")
             
-                for value in product:
-                    if update_line == value:
-                        print("Found")
-                        new_value = input("New value for update")
-                        product[update_line] = new_value
-                        field_found = True
-                        break
+            for produto in inventario:
+                print("=" * 25)
 
-                if not field_found:
-                    print("Field not found.")
-                
-                break
 
-            if not product_found:
-                print("Product not found.")
+                for key, value in produto.items():
+                    print(f"{key.capitalize():<8}: {value}")
+
+                print("=" * 25)
+    
+    elif entrada == 3:
+        if len(inventario) == 0:
+            print("Inventario vazio")
+        
+        else:
+            print("=" * 25)
+            print("Procurar produtos:")
+            procura_produto = input("Qual produto voce procura? ").lower()
+            found = False
+
+            for produto in inventario:
+                if procura_produto == produto["nome"]:
+                    print("Produto encontrado!")
+                    print("=" * 25)
+                    for key,value in produto.items():
+                        print(f"{key.capitalize():<8}: {value}")
+                        print("=" * 25)
+                    found = True
+                    break
+            if not found:
+                print("Produto não encontrado.")
+
+
+    elif entrada == 4:
+        if len(inventario) == 0:
+            print("Inventario vazio")
+
+        else:
+            print("Atualizar produtos")
+            atualizar_inventario = input("Qual produto quer atualizar?").lower()
+            inventario_found = False
+
+            for produto in inventario:
+
+                if (atualizar_inventario == str(produto.get("nome", "")).lower() or
+                    atualizar_inventario == str(produto.get("preço", "")) or
+                    atualizar_inventario == str(produto.get("estoque", ""))):
+                    print("Encontrado!")
+                    print("=" * 25)
+
+                    inventario_found = True
+            
+                    atualizar_produto = input("Oque deseja atualizar no produto?")
+                    produto_found = False
+
+                    for value in produto:
+                        if atualizar_produto == value:
+                            print("Encontrado")
+                            novo_valor = input("Diagite o novo valor:")
+                            produto[atualizar_produto] = novo_valor
+                            produto_found = True
+                            break
+                    if not produto_found:
+                        print("Campo não encontrado.")
+
+            if not inventario_found:
+                print("Produto não encontrado.")
+            break
+    
+    elif entrada == 5:
+        if len(inventario) == 0:
+            print("Inventario vazio")
+
+        else:
+            remover_produto = input("Qual produto deseja remover?").lower()
+            found = False
+
+
+            for produto in inventario:
+                if produto["nome"] == remover_produto:
+                    inventario.remove(produto)
+                    print(f"Produto '{remover_produto}' removido com sucesso!")
+                    found = True
+                    break
+
+            if not found:
+                print("Produto não encontrado no inventário.")
+
+    
+    elif entrada == 6:
+        break
+    else:
+        print("Digite um codigo correto")
+
